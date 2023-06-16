@@ -13,4 +13,4 @@ $autoload['config'] = array();
 
 $autoload['language'] = array();
 
-$autoload['model'] = array('My_Model','contact');
+$autoload['model'] = array('My_Model','contact','country');
