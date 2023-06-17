@@ -8,6 +8,6 @@ class Web extends My_Controller{
         $this->load->view('auth/login');
     }
     function error_404(){
-        $this->load->view('auth/error_404');
+        $this->load->view('auth/404');
     }
 }
