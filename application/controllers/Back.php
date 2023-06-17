@@ -4,7 +4,7 @@ class Back extends MY_Controller{
     function __construct(){
         parent::__construct();
         $this->template = 'layout/back';
-        checkLogin();
+        // checkLogin();
     }
 
     function index(){
