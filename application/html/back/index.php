@@ -1,1 +1,1 @@
-admin index content
+index php codes
