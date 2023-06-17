@@ -8,7 +8,8 @@ class Back extends MY_Controller{
     }
 
     function index(){
-        $this->render('back/index');
+        $data['page_name'] = 'Dashboard';
+        $this->render('back/index',$data);
     }
     function contact(){
         $this->render('back/contact/contact');
