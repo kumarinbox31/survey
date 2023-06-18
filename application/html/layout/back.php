@@ -28,6 +28,31 @@
   <link rel="stylesheet" href="<?php echo base_url('public/theme/'); ?>assets/css/style.css">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="<?php echo base_url('public/theme/'); ?>assets/images/favicon.png" />
+
+  <!-- datatable css-->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+  <!-- datatable css ends -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+  <style>
+    .btn-sm {
+      padding: 0.2rem !important;
+      border-radius: 5px;
+    }
+
+    .btn-sm>i {
+      font-size: 1.5rem !important;
+      margin: 0 !important;
+    }
+
+    .dataTables_empty {
+      color: black;
+    }
+  </style>
 </head>
 
 <body>
@@ -330,6 +355,19 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          <div class="page-header">
+            <h3 class="page-title">
+              <?= isset($page_name) ? $page_name : '' ?>
+            </h3>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?= base_url('back'); ?>">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                <?= isset($page_name) ? $page_name : '' ?>
+                </li>
+              </ol>
+            </nav>
+          </div>
           <?php
           echo $content;
           ?>
@@ -374,6 +412,35 @@
   <!-- Custom js for this page -->
   <script src="<?php echo base_url('public/theme/'); ?>assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
+
+  <!-- datatable js -->
+  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+  <script>
+
+    $(document).ready(function () {
+      $('.datatable').DataTable();
+    });
+    $('.deleteRow').click(function () {
+      var c = confirm('Are you sure?');
+      if (c == false) {
+        return false;
+      };
+      var table = $(this).data('table');
+      var id = $(this).data('id');
+      var files = $(this).data('files');
+      $.ajax({
+        url: "<?= base_url('back/ajax'); ?>",
+        type: "POST",
+        dataType: 'json',
+        data: { type: 'deleteRow', table: table, id: id, files: files },
+        success: function (res) {
+          toastr.success(res.msg, 'Success', { timeOut: 3000 });
+          $('#row_' + id).hide();
+        }
+      });
+    })
+  </script>
+  <!-- datatable js ends -->
 </body>
 
 </html>

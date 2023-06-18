@@ -1,68 +1,40 @@
-<div class="page-header">
-    <h3 class="page-title"> Basic Tables </h3>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Tables</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Basic tables</li>
-        </ol>
-    </nav>
-</div>
+
 
 <div class="row">
 
     <div class="col-lg-12 stretch-card">
         <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Table with contextual classes</h4>
-                <p class="card-description"> Add class <code>.table-{color}</code>
-                </p>
+            <div class="card-header bg-primary text-white">
+                <h4>Contacts</h4>
+            </div>
+            <div class="card-body bg-white">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-contextual">
-                        <thead>
+                    <table class="table table-bordered table-contextual datatable stripe hover">
+                        <thead class="thead-dark">
                             <tr>
                                 <th> # </th>
-                                <th> First name </th>
-                                <th> Product </th>
-                                <th> Amount </th>
-                                <th> Deadline </th>
+                                <th> Company Name </th>
+                                <th> Display Name </th>
+                                <th> C-Type </th>
+                                <th> Actions </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-info">
-                                <td> 1 </td>
-                                <td> Herman Beck </td>
-                                <td> Photoshop </td>
-                                <td> $ 77.99 </td>
-                                <td> May 15, 2015 </td>
-                            </tr>
-                            <tr class="table-info">
-                                <td> 2 </td>
-                                <td> Messsy Adam </td>
-                                <td> Flash </td>
-                                <td> $245.30 </td>
-                                <td> July 1, 2015 </td>
-                            </tr>
-                            <tr class="table-danger">
-                                <td> 3 </td>
-                                <td> John Richards </td>
-                                <td> Premeire </td>
-                                <td> $138.00 </td>
-                                <td> Apr 12, 2015 </td>
-                            </tr>
-                            <tr class="table-success">
-                                <td> 4 </td>
-                                <td> Peter Meggik </td>
-                                <td> After effects </td>
-                                <td> $ 77.99 </td>
-                                <td> May 15, 2015 </td>
-                            </tr>
-                            <tr class="table-primary">
-                                <td> 5 </td>
-                                <td> Edward </td>
-                                <td> Illustrator </td>
-                                <td> $ 160.25 </td>
-                                <td> May 03, 2015 </td>
-                            </tr>
+                            <?php
+                                $i = 1;
+                                foreach($result->result() as $row){
+                                    echo "<tr class='table-info' id='row_$row->id'>
+                                            <td> $i </td>
+                                            <td> $row->company_name </td>
+                                            <td> $row->display_name </td>
+                                            <td> $row->c_type </td>
+                                            <td> 
+                                                <a class='btn btn-sm btn-danger deleteRow' data-table='db_contact' data-id='$row->id'><i class='mdi mdi-delete-forever'></i></a>
+                                            </td>
+                                        </tr>";
+                                $i++;}
+                            ?>
+                            
                         </tbody>
                     </table>
                 </div>

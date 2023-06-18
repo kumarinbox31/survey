@@ -20,42 +20,57 @@ class Back extends MY_Controller
         $data['page_name'] = 'Dashboard';
         $this->render($this->type . '/index', $data);
     }
-    function contact()
+    function contact($page = 'index')
     {
+        $data['result'] = $this->contact->get();
         $data['page_name'] = 'Contact Management';
-        $this->render($this->type . '/contact/index');
+        $this->render($this->type . '/contact/' . $page, $data);
     }
-    function project()
+    function project($page = 'index')
     {
-        $this->render($this->type . '/project/project');
+        $this->render($this->type . '/project/' . $page);
     }
-    function survey()
+    function survey($page = 'index')
     {
-        $this->render($this->type . '/survey/survey');
+        $this->render($this->type . '/survey/' . $page);
     }
-    function edit_project()
+    function edit_project($page = 'index')
     {
-        $this->render($this->type . '/project/edit_project');
+        $this->render($this->type . '/project/' . $page);
     }
-    function vendor()
+    function vendor($page = 'index')
     {
-        $this->render($this->type . '/add_vendor/vendor');
+        $this->render($this->type . '/vendor/' . $page);
     }
     function statistices()
     {
         $this->render($this->type . '/project_statistices/statistices');
     }
-    function user()
+    function user($page='index')
     {
-        $this->render($this->type . '/user/user');
+        $this->render($this->type . '/user/'.$page);
     }
-    function setting()
+    function setting($page='index')
     {
-        $this->render($this->type . '/setting/index');
+        $this->render($this->type . '/setting/'.$page);
     }
 
 
-
+    function ajax()
+    {
+        if ($post = $this->input->post()) {
+            switch ($post['type']) {
+                case 'deleteRow':
+                    $this->db->where('id', $post['id'])->delete($post['table']);
+                    $res['msg'] = 'Delete Successfully.';
+                    break;
+                default:
+                    $res['msg'] = 'Something went wrong';
+                    break;
+            }
+            echo json_encode($res);
+        }
+    }
 
 
 
