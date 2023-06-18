@@ -1,7 +1,12 @@
 <?php 
 
 function checkLogin() {
-    if(!config_item('login')){
+    if(!get_cookie('login')){
         redirect(base_url('login.aspx'));
+    }
+}
+function isUserActive() {
+    if(get_cookie('login')){
+        redirect(base_url('back'));
     }
 }

@@ -33,8 +33,9 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
   <!-- datatable css ends -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
@@ -51,6 +52,70 @@
 
     .dataTables_empty {
       color: black;
+    }
+
+    .required::after {
+      content: ' *';
+      color: red;
+    }
+
+    .select2-container--default .select2-selection--single,
+    .select2-selection .select2-selection--single {
+      border: 1px solid #d2d6de;
+      border-radius: 0;
+      padding: 6px 12px;
+      height: 34px
+    }
+
+    .select2-container--default .select2-selection--single {
+      background-color: #fff;
+      border: 1px solid #aaa;
+      border-radius: 4px
+    }
+
+    .select2-container .select2-selection--single {
+      box-sizing: border-box;
+      cursor: pointer;
+      display: block;
+      height: 28px;
+      user-select: none;
+      -webkit-user-select: none
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+      padding-right: 10px
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+      padding-left: 0;
+      padding-right: 0;
+      height: auto;
+      margin-top: -3px
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      color: #444;
+      line-height: 28px
+    }
+
+    .select2-container--default .select2-selection--single,
+    .select2-selection .select2-selection--single {
+      border: 1px solid #d2d6de;
+      border-radius: 0 !important;
+      padding: 6px 12px;
+      height: 40px !important
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      height: 26px;
+      position: absolute;
+      top: 6px !important;
+      right: 1px;
+      width: 20px
+    }
+
+    .form-check {
+      margin-left: 1rem;
     }
   </style>
 </head>
@@ -363,7 +428,7 @@
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?= base_url('back'); ?>">Dashboard</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                <?= isset($page_name) ? $page_name : '' ?>
+                  <?= isset($page_name) ? $page_name : '' ?>
                 </li>
               </ol>
             </nav>
@@ -412,13 +477,14 @@
   <!-- Custom js for this page -->
   <script src="<?php echo base_url('public/theme/'); ?>assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
   <!-- datatable js -->
   <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
   <script>
 
     $(document).ready(function () {
       $('.datatable').DataTable();
+      $('.select2').select2();
     });
     $('.deleteRow').click(function () {
       var c = confirm('Are you sure?');
@@ -439,6 +505,12 @@
         }
       });
     })
+    <?php if($msg = $this->session->flashdata('success_msg')){?>
+      toastr.success('<?=$msg?>', 'Success', { timeOut: 3000 });
+    <?php  } ?>
+    <?php if($msg = $this->session->flashdata('error_msg')){?>
+      toastr.error('<?=$msg?>', 'Error', { timeOut: 3000 });
+    <?php  } ?>
   </script>
   <!-- datatable js ends -->
 </body>

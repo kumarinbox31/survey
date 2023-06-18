@@ -3,7 +3,7 @@ class My_Model extends CI_Model{
     protected $table;
 
     public function get($wh = []){
-        return $this->db->get_where($this->table);
+        return $this->db->get_where($this->table,$wh);
     }
     public function add($data){
         if(function_exists('boot')){
