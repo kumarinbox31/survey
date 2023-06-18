@@ -22,6 +22,7 @@ class Back extends MY_Controller
     }
     function contact()
     {
+        $data['page_name'] = 'Contact Management';
         $this->render($this->type . '/contact/index');
     }
     function project()
