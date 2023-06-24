@@ -2,7 +2,8 @@
 class Web extends My_Controller{
     
     function index() {
-        $this->render('web/index');
+        // $this->render('web/index');
+        redirect(site_url('login'));
     }
     function login() {
         isUserActive();
