@@ -46,20 +46,20 @@
                 <div class="form-group d-flex align-items-center justify-content-between">
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input"> Remember me </label>
+                      <!-- <input type="checkbox" class="form-check-input"> Remember me </label> -->
                   </div>
-                  <a href="#" class="forgot-pass">Forgot password</a>
+                  <!-- <a href="#" class="forgot-pass">Forgot password</a> -->
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                 </div>
-                <div class="d-flex">
+                <!-- <div class="d-flex">
                   <button class="btn btn-facebook mr-2 col">
                     <i class="mdi mdi-facebook"></i> Facebook </button>
                   <button class="btn btn-google col">
                     <i class="mdi mdi-google-plus"></i> Google plus </button>
                 </div>
-                <p class="sign-up">Don't have an Account?<a href="#"> Sign Up</a></p>
+                <p class="sign-up">Don't have an Account?<a href="#"> Sign Up</a></p> -->
               </form>
             </div>
           </div>
@@ -104,9 +104,8 @@
             setTimeout(function () {
               window.location.href="<?=base_url('back');?>";
             },3000);
-          }
-          if (res.status == 0) {
-            toastr.danger('You entered wrong username and password');
+          }else{
+            toastr.error('You entered wrong username and password');
           }
         }
       });
