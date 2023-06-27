@@ -13,4 +13,7 @@ $autoload['config'] = array();
 
 $autoload['language'] = array();
 
-$autoload['model'] = array('My_Model','contact','country','CompanyType','ContactGroup','project','login','logs');
+$autoload['model'] = [
+    'My_Model','contact','country','CompanyType','ContactGroup','project','login','logs',
+    'ProjectStatus'
+];
