@@ -13,8 +13,8 @@ class Project extends My_Model{
             'rules' => 'required',
         ],
         [
-            'field' => 'project_status',
-            'label' => 'Project Status',
+            'field' => 'project_status_id',
+            'label' => 'project_status_id',
             'rules' => 'required',
         ],
     ];

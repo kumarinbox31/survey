@@ -13,11 +13,11 @@ class Contact extends My_Model
             'label' => 'Company Name',
             'rules' => 'required',
         ],
-        [
-            'field' => 'company_type_id',
-            'label' => 'Company Type',
-            'rules' => 'required',
-        ],
+        // [
+        //     'field' => 'company_type_id',
+        //     'label' => 'Company Type',
+        //     'rules' => 'required',
+        // ],
         [
             'field' => 'contact_group_id',
             'label' => 'Contact Group',

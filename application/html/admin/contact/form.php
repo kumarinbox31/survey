@@ -1,10 +1,15 @@
 <?php
-$company_name = $display_name = $company_type_id = $contact_group_id =
-    $person_name = $position = $email = $phone = $address = $country_id = $status = '';
+use PHPUnit\Framework\Constraint\IsJson;
+
+$company_name = $display_name = $contact_group_id =
+    $person_name = $position = $email = $phone = $address = $country_id = $status = $complition_link = 
+    $disqualify_link = $quota_full_link = '';
+$company_type_id = '[]';
 if (isset($row) && $row->num_rows()) {
     $row = (array) $row->row();
     extract($row);
 }
+
 ?>
 
 <div class="form-group col-md-6">
@@ -21,16 +26,18 @@ if (isset($row) && $row->num_rows()) {
 </div>
 <div class="form-group col-md-6">
     <label for="company_type_id" class="required text-black">Company type</label>
-    <select class="form-control select2 <?php echo form_error('company_type_id') ? 'is-invalid' : ''; ?>"
-        id="company_type_id" name="company_type_id">
-        <?php
-        $get = $this->CompanyType->get(['status' => '1']);
-        foreach ($get->result() as $row) {
-            $selected = $row->id == $company_type_id ? 'selected' : '';
-            echo "<option value='$row->id' $selected>$row->name</option> ";
-        }
-        ?>
-    </select>
+    <?php
+    $get = $this->CompanyType->get(['status' => '1']);
+    foreach ($get->result() as $row) {
+        $checked = in_array($row->id, json_decode($company_type_id)) ? 'checked' : '';
+        echo '<div class="form-check">
+                <input class="form-check-input companytype" type="checkbox" onchange="redirectToggle(this.value)" name="company_type_id[]" value="' . $row->id . '" id="type_' . $row->id . '" ' . $checked . '>
+                <label class="form-check-label" for="type_' . $row->id . '">
+                    ' . $row->name . '
+                </label>
+                </div>';
+    }
+    ?>
     <?php echo form_error('company_type_id') ?>
 </div>
 <div class="form-group col-md-6">
@@ -62,7 +69,8 @@ if (isset($row) && $row->num_rows()) {
 <div class="form-group col-md-6">
     <label for="position" class="required text-black">Title (Position)</label>
     <input type="text" class="form-control bg-white text-dark <?php echo form_error('position') ? 'is-invalid' : ''; ?>"
-        id="position" placeholder="Title (Position)" name="position" value="<?php echo set_value('position',$position) ?>">
+        id="position" placeholder="Title (Position)" name="position"
+        value="<?php echo set_value('position', $position) ?>">
     <?php echo form_error('position') ?>
 </div>
 <div class="form-group col-md-6">
@@ -95,13 +103,62 @@ if (isset($row) && $row->num_rows()) {
     </select>
     <?php echo form_error('country_id') ?>
 </div>
+<div class="col-md-12" id="redirects" style="display:none">
+    <div class="row">
+        <div class="col-md-12">
+            <u style="color:black;">
+                <h3 class="text-black">Redirects</h3>
+            </u>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="complition_link" class="required text-black">Complition Link</label>
+            <textarea class="form-control bg-white text-dark <?php echo form_error('complition_link') ? 'is-invalid' : ''; ?>"
+                name="complition_link" id="complition_link" placeholder="Complition Link"><?php echo set_value('complition_link', $complition_link) ?></textarea>
+            <?php echo form_error('complition_link') ?>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="disqualify_link" class="required text-black">Disqualify Link</label>
+            <textarea class="form-control bg-white text-dark <?php echo form_error('disqualify_link') ? 'is-invalid' : ''; ?>"
+                name="disqualify_link" id="disqualify_link" placeholder="Disqualify Link"><?php echo set_value('disqualify_link', $disqualify_link) ?></textarea>
+            <?php echo form_error('disqualify_link') ?>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="quota_full_link" class="required text-black">Quota Full Link</label>
+            <textarea class="form-control bg-white text-dark <?php echo form_error('quota_full_link') ? 'is-invalid' : ''; ?>"
+                name="quota_full_link" id="quota_full_link" placeholder="Quota Full Link"><?php echo set_value('quota_full_link', $quota_full_link) ?></textarea>
+            <?php echo form_error('quota_full_link') ?>
+        </div>
+        
+    </div>
+</div>
+
 <div class="form-check col-md-12 form-check-flat form-check-primary">
     <input type="hidden" name="status" value="0">
     <label class="form-check-label">
         <input type="checkbox" class="form-check-input" name="status" value="1" <?php echo set_value('status', $status) == 1 ? 'checked' : ''; ?>> Active <i class="input-helper"></i>
     </label>
 </div>
+
+
 <div class="form-group col-md-12">
     <button type="submit" class="btn btn-primary mr-2">Submit</button>
     <button class="btn btn-dark">Cancel</button>
 </div>
+
+
+
+
+
+
+<script>
+    function redirectToggle(id) {
+        // companytype
+
+        if ($('#type_' + 3).is(":checked")) {
+            $('#redirects').show();
+        } else {
+            $('#redirects').hide();
+        }
+
+    }
+</script>

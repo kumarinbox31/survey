@@ -5,6 +5,26 @@ class Web extends My_Controller{
         // $this->render('web/index');
         redirect(site_url('login'));
     }
+    function endcapture(){
+        if($get = $_GET){
+            $a = $get['a'];
+            if ($a == 1) {
+                $msg = "Thank You For Completing This Survey.";
+                $color = 'green';
+            } elseif ($a == 2) {
+                $msg = "Thank you for your participations, but unfortunately you did not qualify for this survey.";
+                $color = 'red';
+            } elseif ($a == 3) {
+                $msg = "Thank you for your participations, but we have met the required audience.";
+                $color = 'orange';
+            }  
+            
+            echo "<h1 style='text-align:center;color:$color;'>$msg</h1>";
+
+        }
+
+        
+    }
     function login() {
         isUserActive();
         if($post = $this->input->post()){

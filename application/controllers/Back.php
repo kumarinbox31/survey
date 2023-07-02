@@ -1,8 +1,18 @@
 <?php
 
+/**
+ * Summary of Back
+ */
 class Back extends MY_Controller
 {
+    /**
+     * Summary of type
+     * @var 
+     */
     public $type;
+    /**
+     * Summary of __construct
+     */
     function __construct()
     {
         parent::__construct();
@@ -11,15 +21,41 @@ class Back extends MY_Controller
         checkLogin();
     }
 
+    /**
+     * Summary of index
+     * @return void
+     */
     function index()
     {
         redirect(base_url('back/dashboard'));
     }
+
+    function vendor($pid, $page = 'add_vendor', $vid = 0)
+    {
+        if ($post = $this->input->post()) {
+            $this->ProjectVendor->add($post);
+            $this->session->set_flashdata('success_msg', 'Vendor Added Successfully.');
+            redirect(base_url('back/project/edit/') . $pid);
+        } else {
+            $data['project'] = $this->project->get(['id' => $pid])->row();
+            $this->render($this->type . '/project/' . $page, $data);
+        }
+    }
+    /**
+     * Summary of dashboard
+     * @return void
+     */
     function dashboard()
     {
         $data['page_name'] = 'Dashboard';
         $this->render($this->type . '/index', $data);
     }
+    /**
+     * Summary of contact
+     * @param mixed $page
+     * @param mixed $id
+     * @return void
+     */
     function contact($page = 'index', $id = 0)
     {
         if ($id) {
@@ -53,8 +89,8 @@ class Back extends MY_Controller
                     if ($this->form_validation->run() == false) {
                         $this->render($this->type . '/contact/' . $page, $data);
                     } else {
-                        $this->contact->update(['id'=>$post['id']],$post);
-                        $this->session->set_flashdata('success_msg', 'Contact ('.$post['company_name'].') Updated Successfully.');
+                        $this->contact->update(['id' => $post['id']], $post);
+                        $this->session->set_flashdata('success_msg', 'Contact (' . $post['company_name'] . ') Updated Successfully.');
                         redirect(current_url());
                     }
                     break;
@@ -63,6 +99,12 @@ class Back extends MY_Controller
             $this->render($this->type . '/contact/' . $page, $data);
         }
     }
+    /**
+     * Summary of project
+     * @param mixed $page
+     * @param mixed $id
+     * @return void
+     */
     function project($page = 'index', $id = 0)
     {
         if ($id) {
@@ -84,8 +126,22 @@ class Back extends MY_Controller
                     if ($this->form_validation->run() == false) {
                         $this->render($this->type . '/project/' . $page, $data);
                     } else {
-                        $this->project->add($post);
-                        $this->session->set_flashdata('success_msg', 'Project ('.$post['project'].') Added Successfully.');
+                        $ins = $this->project->add($post);
+                        if (!$ins) {
+                            print_r($this->db->error());
+                            exit;
+                        }
+                        // getting project id 
+                        $pid = $this->db->insert_id();
+                        // upload unique links
+                        if ($_FILES['unique_links']['name'] != '') {
+
+                        }
+                        // upload keys
+                        if ($_FILES['keys']['name'] != '') {
+
+                        }
+                        $this->session->set_flashdata('success_msg', 'Project (' . $post['project_name'] . ') Added Successfully.');
                         redirect(current_url());
                     }
                     break;
@@ -96,8 +152,18 @@ class Back extends MY_Controller
                     if ($this->form_validation->run() == false) {
                         $this->render($this->type . '/project/' . $page, $data);
                     } else {
-                        $this->project->update(['id'=>$post['id']],$post);
-                        $this->session->set_flashdata('success_msg', 'Project ('.$post['project'].') Updated Successfully.');
+                        $this->project->update(['id' => $post['id']], $post);
+                        // getting project id 
+                        $pid = $post['id'];
+                        // upload unique links
+                        if ($_FILES['unique_links']['name'] != '') {
+
+                        }
+                        // upload keys
+                        if ($_FILES['keys']['name'] != '') {
+
+                        }
+                        $this->session->set_flashdata('success_msg', 'Project (' . $post['project_name'] . ') Updated Successfully.');
                         redirect(current_url());
                     }
                     break;
@@ -106,28 +172,48 @@ class Back extends MY_Controller
             $this->render($this->type . '/project/' . $page, $data);
         }
     }
+    /**
+     * Summary of survey
+     * @param mixed $page
+     * @return void
+     */
     function survey($page = 'index')
     {
         $this->render($this->type . '/survey/' . $page);
     }
-    function vendor($page = 'index')
-    {
-        $this->render($this->type . '/vendor/' . $page);
-    }
+
+    /**
+     * Summary of statistices
+     * @return void
+     */
     function statistices()
     {
         $this->render($this->type . '/project_statistices/statistices');
     }
+    /**
+     * Summary of user
+     * @param mixed $page
+     * @return void
+     */
     function user($page = 'index')
     {
         $this->render($this->type . '/user/' . $page);
     }
+    /**
+     * Summary of setting
+     * @param mixed $page
+     * @return void
+     */
     function setting($page = 'index')
     {
         $this->render($this->type . '/setting/' . $page);
     }
 
 
+    /**
+     * Summary of ajax
+     * @return void
+     */
     function ajax()
     {
         if ($post = $this->input->post()) {
@@ -144,7 +230,12 @@ class Back extends MY_Controller
         }
     }
 
-    function logout() {
+    /**
+     * Summary of logout
+     * @return void
+     */
+    function logout()
+    {
         delete_cookie('login');
         delete_cookie('login_user_id');
         delete_cookie('login_user_type');

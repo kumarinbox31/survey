@@ -23,12 +23,17 @@
                             <?php
                                 $i = 1;
                                 foreach($result->result() as $row){
-                                    $type = $this->CompanyType->get(['id'=>$row->company_type_id])->row();
+                                    $types = '';
+                                    foreach(json_decode($row->company_type_id) as $type_id){
+                                        $type = $this->CompanyType->get(['id'=>$type_id])->row();
+                                        $types .= "$type->name | ";
+                                    }
+                                    $types = rtrim($types,' | ');
                                     echo "<tr class='table-info' id='row_$row->id'>
                                             <td> $i </td>
                                             <td> $row->company_name </td>
                                             <td> $row->display_name </td>
-                                            <td> $type->name </td>
+                                            <td> $types </td>
                                             <td> 
                                                 <a class='btn btn-sm btn-warning' href='".base_url('back/contact/edit/').$row->id."'><i class='mdi mdi-table-edit'></i></a>
                                                 <a class='btn btn-sm btn-danger deleteRow' data-table='db_contact' data-id='$row->id'><i class='mdi mdi-delete-forever'></i></a>
