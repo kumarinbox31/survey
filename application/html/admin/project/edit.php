@@ -8,7 +8,7 @@
       </h4>
     </div>
     <div class="card-body bg-white text-dark">
-      <form class="row" method="post">
+      <form class="row" method="post" enctype="multipart/form-data">
         <input type="hidden" name="action" value="update">
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <?php include('edit_form.php'); ?>
