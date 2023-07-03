@@ -32,12 +32,13 @@ class Back extends MY_Controller
 
     function vendor($pid, $page = 'add_vendor', $vid = 0)
     {
+        $data['project'] = $this->project->get(['id' => $pid])->row();
+        $data['project_vendor'] = $this->ProjectVendor->get(['id' => $vid])->row();
         if ($post = $this->input->post()) {
             $this->ProjectVendor->add($post);
             $this->session->set_flashdata('success_msg', 'Vendor Added Successfully.');
             redirect(base_url('back/project/edit/') . $pid);
         } else {
-            $data['project'] = $this->project->get(['id' => $pid])->row();
             $this->render($this->type . '/project/' . $page, $data);
         }
     }

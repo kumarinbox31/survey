@@ -185,16 +185,23 @@ if (isset($row) && $row->num_rows()) {
     $over_quota_url = base_url("endcapture.php?a=3&sid=$project_id&uid=333");
     ?>
     <div class="col-md-5">
-        <h4><u>Redirects</u></h4>
-        <p><strong>Complete : </strong><br>
-            <a target="_blank" href="<?php echo $complete_url; ?>"><?php echo $complete_url; ?></a>
-        </p>
-        <p><strong>Terminate : </strong><br>
-            <a target="_blank" href="<?php echo $terminate_url; ?>"><?php echo $terminate_url; ?></a>
-        </p>
-        <p><strong>Over Quota : </strong><br>
-            <a target="_blank" href="<?php echo $over_quota_url; ?>"><?php echo $over_quota_url; ?></a>
-        </p>
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                 <h4><u>Redirects</u></h4>
+            </div>
+            <div class="card-body bg-white">
+                <p><strong>Complete : </strong><br>
+                    <a target="_blank" href="<?php echo $complete_url; ?>"><?php echo $complete_url; ?></a>
+                </p>
+                <p><strong>Terminate : </strong><br>
+                    <a target="_blank" href="<?php echo $terminate_url; ?>"><?php echo $terminate_url; ?></a>
+                </p>
+                <p><strong>Over Quota : </strong><br>
+                    <a target="_blank" href="<?php echo $over_quota_url; ?>"><?php echo $over_quota_url; ?></a>
+                </p>
+            </div>
+        </div>
+        
         <table class="table table-responsive table-light display compact datatable" style="width:100%">
             <thead>
                 <tr>
@@ -207,7 +214,30 @@ if (isset($row) && $row->num_rows()) {
                 </tr>
             </thead>
             <tbody>
-                
+                <?php 
+                    $get = $this->ProjectVendor->get(['project_id'=>$id]);
+                    foreach($get->result() as $row){
+                        $projectVendorEdit = base_url('back/vendor/'.$id.'/edit_vendor/'.$row->id);
+                        $vendor = $this->contact->get(['id'=>$row->vendor])->row();
+                        echo "<tr>
+                                <td class='text-center'>
+                                    <a href='$projectVendorEdit' class='btn btn-sm btn-info' ><i class='mdi mdi-table-edit'></i></a>
+                                </td>
+                                <td>$row->id</td>
+                                <td>$vendor->display_name</td>
+                                <td>
+                                    <a >Redirects : </a><br>
+                                    <a >Completed : </a><br>
+                                    <a >Disqualified : </a><br>
+                                    <a >QF : </a><br>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <a class='btn btn-sm btn-warning'><i class='mdi mdi-link-variant'></i></a>
+                                </td>
+                            </tr>";
+                    }
+                ?>
             </tbody>
         </table>
         <a href="<?=base_url('back/vendor/').$id;?>" class="btn btn-outline-primary"> Add Vendor</a>

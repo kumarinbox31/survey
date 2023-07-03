@@ -1,8 +1,8 @@
 <div class="card">
     <div class="card-header bg-warning text-white">
         <h5>
-            Add Vendor
-            <a href="<?php echo back_url(); ?>" class="pull-right btn btn-sm btn-danger" style="float:right;">Back</a>
+            Add Project Vendor
+            <a href="<?php echo base_url('back/project/edit/').$project->id; ?>" class="pull-right btn btn-sm btn-danger" style="float:right;">Back</a>
         </h5>
     </div>
     <style>
