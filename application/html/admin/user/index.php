@@ -16,8 +16,8 @@
                                 <th> # </th>
                                 <th> Type </th>
                                 <th> Name </th>
-                                <th>Username</th>
-                                <th>Password</th>
+                                <th> Username </th>
+                                <th> Password </th>
                                 <th> Actions </th>
                             </tr>
                         </thead>
@@ -27,12 +27,13 @@
                                 foreach($result->result() as $row){
                                     echo "<tr class='table-info' id='row_$row->id'>
                                             <td> $i </td>
-                                            <td> $row->project_name </td>
-                                            <td> $row->project_status_id </td>
+                                            <td> $row->type </td>
+                                            <td> $row->name </td>
+                                            <td> $row->username </td>
+                                            <td> $row->password </td>
                                             <td> 
-                                                <a class='btn btn-sm btn-warning' href='".base_url('back/project/edit/').$row->id."'><i class='mdi mdi-table-edit'></i></a>
-                                                <a class='btn btn-sm btn-danger deleteRow' data-table='db_project' data-id='$row->id'><i class='mdi mdi-delete-forever'></i></a>
-
+                                                <a class='btn btn-sm btn-warning' href='".base_url('back/user/edit/').$row->id."'><i class='mdi mdi-table-edit'></i></a>
+                                                <a class='btn btn-sm btn-danger deleteRow' data-table='db_login' data-id='$row->id'><i class='mdi mdi-delete-forever'></i></a>
                                             </td>
                                         </tr>";
                                 $i++;}

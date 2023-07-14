@@ -1,8 +1,8 @@
 <div class="col-md-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-header bg-success text-white">
-      <h4>Add New Project
-        <a href="<?= base_url('back/project'); ?>" class="btn btn-danger" style="float:right"><i
+      <h4>Add New User
+        <a href="<?= base_url('back/user'); ?>" class="btn btn-danger" style="float:right"><i
             class="mdi mdi-keyboard-backspace"></i>
           Back</a>
       </h4>

@@ -196,9 +196,46 @@ class Back extends MY_Controller
      * @param mixed $page
      * @return void
      */
-    function user($page = 'index')
+    function user($page = 'index', $id = 0)
     {
-        $this->render($this->type . '/user/' . $page);
+        if ($id) {
+            $data['row'] = $this->login->get(['id' => $id]);
+            $data['id'] = $id;
+        } else {
+            $data['result'] = $this->login->get();
+        }
+        if ($post = $this->input->post()) {
+            $action = $post['action'];
+            unset($post['action']);
+            switch ($action) {
+                case 'add':
+                    $config = $this->login->config;
+                    $this->form_validation->set_rules($config);
+                    $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
+                    if ($this->form_validation->run() == false) {
+                        $this->render($this->type . '/user/' . $page, $data);
+                    } else {
+                        $this->login->add($post);
+                        $this->session->set_flashdata('success_msg', 'User Added Successfully.');
+                        redirect(current_url());
+                    }
+                break;
+                case 'update':
+                    $config = $this->login->config;
+                    $this->form_validation->set_rules($config);
+                    $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
+                    if ($this->form_validation->run() == false) {
+                        $this->render($this->type . '/user/' . $page, $data);
+                    } else {
+                        $this->login->update(['id' => $post['id']], $post);
+                        $this->session->set_flashdata('success_msg', 'User Added Successfully.');
+                        redirect(current_url());
+                    }
+                break;
+            }
+        } else {
+            $this->render($this->type . '/user/' . $page, $data);
+        }
     }
     /**
      * Summary of setting
