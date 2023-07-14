@@ -25,7 +25,7 @@ if (isset($row) && $row->num_rows()) {
         value="<?= set_value('display_name', $display_name) ?>" name="display_name">
 </div>
 <div class="form-group col-md-6">
-    <label for="company_type_id" class="required text-black">Company type</label>
+    <label for="company_type_id" class="text-black">Company type</label>
     <?php
     $get = $this->CompanyType->get(['status' => '1']);
     foreach ($get->result() as $row) {
