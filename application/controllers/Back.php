@@ -228,7 +228,7 @@ class Back extends MY_Controller
                         $this->render($this->type . '/user/' . $page, $data);
                     } else {
                         $this->login->update(['id' => $post['id']], $post);
-                        $this->session->set_flashdata('success_msg', 'User Added Successfully.');
+                        $this->session->set_flashdata('success_msg', 'User Details Updated Successfully.');
                         redirect(current_url());
                     }
                 break;
