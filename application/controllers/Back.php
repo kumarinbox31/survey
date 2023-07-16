@@ -153,7 +153,11 @@ class Back extends MY_Controller
                     if ($this->form_validation->run() == false) {
                         $this->render($this->type . '/project/' . $page, $data);
                     } else {
-                        $this->project->update(['id' => $post['id']], $post);
+                        $ins = $this->project->update(['id' => $post['id']], $post);
+                        if(!$ins){
+                            print_r($this->db->error());exit;
+                        }
+                        
                         // getting project id 
                         $pid = $post['id'];
                         // upload unique links
