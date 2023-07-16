@@ -5,6 +5,65 @@ class Web extends My_Controller{
         // $this->render('web/index');
         redirect(site_url('login'));
     }
+    function capture() {
+        if($get = $_GET){
+            extract($get);
+            
+            // url validation
+            if(!isset($pid) || !isset($gid)){
+                echo 'Invalid url.';
+                return false;
+            }
+            $project = $this->project->get(['id'=>$gid]);
+            $vendor = $this->contact->get(['id'=>$pid]);
+            if(!$project->num_rows()){
+                echo  'Invalid Survey Id';
+                return false;
+            }
+            if(!$vendor->num_rows()){
+                echo 'Invalid Vendor Id';
+                return false;
+            }
+
+            // IP Address Validation
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $res = $this->response->get(['project_id'=>$gid,'ip_address'=>$ip]);
+            if($res->num_rows()){
+                echo 'Already available ip address';
+                return false;
+            }
+            // project details
+            $project = $project->row();
+
+            switch($project->project_status_id){
+                case 1:
+                    // running
+                    $this->response->add(['project_id'=>$gid,'ip_address'=>$ip,'panlist_id'=>$pid,'status'=>'Redirected']);
+                    $link = $project->survey_link;
+                    $link = str_replace("{{RESP_ID}}",$gid,$link);
+                    header("Location: $link");
+                break;
+                case 2:
+                    // Testing
+                    
+                break;
+                case 3:
+                    echo 'Complete';return false;
+                break;
+                case 4:
+                    echo 'Quota Full.';return false;
+                break;
+                case 5:
+                    echo 'Hold';return false;
+                break;
+                case 6:
+                    echo 'Closed';return false;
+                break;
+                
+            }
+           
+        }
+    }
     function endcapture(){
         if($get = $_GET){
             $a = $get['a'];
@@ -21,8 +80,9 @@ class Web extends My_Controller{
             
             echo "<h1 style='text-align:center;color:$color;'>$msg</h1>";
 
+        }else{
+            // redirect(base_url('/'));
         }
-
         
     }
     function login() {

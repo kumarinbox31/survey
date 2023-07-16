@@ -135,18 +135,35 @@ class Back extends MY_Controller
                         // getting project id 
                         $pid = $this->db->insert_id();
                         // upload unique links
-                        if ($_FILES['unique_links']['name'] != '') {
-
+                        if (isset($_FILES['unique_links']) && $_FILES['unique_links']['name'] != '') {
+                            
                         }
                         // upload keys
-                        if ($_FILES['keys']['name'] != '') {
+                        if (isset($_FILES['keys']) && $_FILES['keys']['name'] != '') {
 
+                        }
+                        // add internal companies as vendor
+                        $get = $this->contact->get(['contact_group_id'=>2]);
+                        if($get->num_rows()){
+                            foreach($get->result() as $row){
+                                $data = [
+                                    'project_id' => $pid,
+                                    'vendor' => $row->id,
+                                    'cpc_cpi' => $post['cpi_cpc'],
+                                    'req_complete' => $post['no_of_complete']
+                                ];
+                                $ins = $this->ProjectVendor->add($data);
+                                if(!$ins){
+                                    print_r($this->db->error());
+                                }
+                            }
                         }
                         $this->session->set_flashdata('success_msg', 'Project (' . $post['project_name'] . ') Added Successfully.');
                         redirect(current_url());
                     }
                     break;
                 case 'update':
+                    unset($post['DataTables_Table_0_length']);
                     $config = $this->project->config;
                     $this->form_validation->set_rules($config);
                     $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');

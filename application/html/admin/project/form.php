@@ -145,7 +145,7 @@ if (isset($row) && $row->num_rows()) {
     <textarea name="survey_link" class="form-control bg-white text-dark" id="" cols="10"
         rows="5"><?php echo set_value('survey_link', $survey_link); ?></textarea>
     <?php echo form_error('survey_link') ?>
-    <p>Use <strong>http://example.com/test-survey?id={{RESP_ID}}</strong> link for testing survey</p>
+    <p>Use <strong>http://braininfotech.com/test-survey?id={{RESP_ID}}</strong> link for testing survey</p>
 </div>
 <div class="col-md-12 from-group">
     <label>Hand Quotes</label>

@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = TRUE;
 
 $route['login'] = 'web/login';
 $route['endcapture.php'] = 'web/endcapture';
+$route['capture.php'] = 'web/capture';

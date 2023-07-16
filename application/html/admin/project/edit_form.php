@@ -156,7 +156,7 @@ if (isset($row) && $row->num_rows()) {
                 <textarea name="survey_link" class="form-control bg-white text-dark" id="" cols="10"
                     rows="5"><?php echo set_value('survey_link', $survey_link); ?></textarea>
                 <?php echo form_error('survey_link') ?>
-                <p>Use <strong>http://example.com/test-survey?id={{RESP_ID}}</strong> link for testing survey</p>
+                <p>Use <strong>http://braininfotech.com/test-survey?id={{RESP_ID}}</strong> link for testing survey</p>
             </div>
             <div class="col-md-12 from-group">
                 <label>Hand Quotes</label>
@@ -218,6 +218,9 @@ if (isset($row) && $row->num_rows()) {
                 foreach ($get->result() as $row) {
                     $projectVendorEdit = base_url('back/vendor/' . $id . '/edit_vendor/' . $row->id);
                     $vendor = $this->contact->get(['id' => $row->vendor])->row();
+                    $link = base_url('capture.php?gid=').$id.'&pid='.$row->vendor;
+                    $redirects = $this->response->get(['project_id'=>$id,'panlist_id'=>$row->vendor])->num_rows();
+
                     echo "<tr>
                                 <td class='text-center'>
                                     <a href='$projectVendorEdit' class='btn btn-sm btn-info' ><i class='mdi mdi-table-edit'></i></a>
@@ -225,14 +228,14 @@ if (isset($row) && $row->num_rows()) {
                                 <td>$row->id</td>
                                 <td>$vendor->display_name</td>
                                 <td>
-                                    <a >Redirects : </a><br>
+                                    <a >Redirects : $redirects/0</a><br>
                                     <a >Completed : </a><br>
                                     <a >Disqualified : </a><br>
                                     <a >QF : </a><br>
                                 </td>
                                 <td></td>
                                 <td>
-                                    <a class='btn btn-sm btn-warning'><i class='mdi mdi-link-variant'></i></a>
+                                    <a onclick='alert(".'"'.$link.'"'.");' class='btn btn-sm btn-warning'><i class='mdi mdi-link-variant'></i></a>
                                 </td>
                             </tr>";
                 }

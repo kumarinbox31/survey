@@ -15,5 +15,5 @@ $autoload['language'] = array();
 
 $autoload['model'] = [
     'My_Model','contact','country','CompanyType','ContactGroup','project','login','logs',
-    'ProjectStatus','ProjectVendor'
+    'ProjectStatus','ProjectVendor','response',
 ];
