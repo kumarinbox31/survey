@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2023 at 02:06 PM
+-- Generation Time: Jul 16, 2023 at 09:59 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -81,7 +81,7 @@ CREATE TABLE `db_contact` (
 
 INSERT INTO `db_contact` (`id`, `company_name`, `display_name`, `company_type_id`, `contact_group_id`, `person_name`, `position`, `email`, `phone`, `address`, `country_id`, `complition_link`, `disqualify_link`, `quota_full_link`, `notes`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (8, 'Test', 'Test', '[\"3\"]', 1, 'Abhijeet Singh', 'Sales Executive', 'test@gmail.com', '1234567890', 'test', 1, '', '', '', '', '1', '', '', '2023-06-24 15:30:47', '2023-06-29 15:29:11'),
-(10, 'Internal Company', 'test', '[\"2\",\"3\"]', 1, 'test', 'test', 'test@gmail.com', '84656465', 'test', 1, '#', '#', '#', '', '1', '', '', '2023-07-02 07:09:36', '2023-07-02 09:17:19');
+(10, 'Internal Company', 'test', '[\"2\",\"3\"]', 2, 'test', 'test', 'test@gmail.com', '84656465', 'test', 1, '#', '#', '#', '', '1', '', '', '2023-07-02 07:09:36', '2023-07-16 06:23:25');
 
 -- --------------------------------------------------------
 
@@ -217,7 +217,7 @@ CREATE TABLE `db_project` (
 --
 
 INSERT INTO `db_project` (`id`, `project_name`, `project_status_id`, `client`, `contact`, `sales`, `manager_name`, `no_of_complete`, `ir`, `loi`, `country`, `cpi_cpc`, `project_type`, `survey_link`, `code`, `quoates`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(4, 'Project Test', 1, 8, 8, 2, '3', 10, '10', '25', 1, 'test', 'test', 'http://example.com/test-survey?id={{RESP_ID}}', '', 'sadfasdf123', '', '', '2023-07-02 07:15:29', '2023-07-02 07:15:29');
+(4, 'Project Test', 1, 8, 8, 2, '3', 10, '10', '25', 1, 'test', 'test', 'http://braininfotech.com/test-survey?id={{RESP_ID}}', '', 'sadfasdf123', '', '', '2023-07-02 07:15:29', '2023-07-02 07:15:29');
 
 -- --------------------------------------------------------
 
@@ -244,6 +244,7 @@ CREATE TABLE `db_project_keys` (
 CREATE TABLE `db_project_status` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
+  `color` varchar(100) NOT NULL,
   `status` enum('1','0') NOT NULL DEFAULT '1',
   `created_by` varchar(100) NOT NULL,
   `updated_by` varchar(100) NOT NULL,
@@ -255,11 +256,13 @@ CREATE TABLE `db_project_status` (
 -- Dumping data for table `db_project_status`
 --
 
-INSERT INTO `db_project_status` (`id`, `title`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'Running', '1', '', '', '2023-06-18 15:42:52', '2023-06-18 15:42:52'),
-(2, 'Testing', '1', '', '', '2023-06-18 15:43:04', '2023-06-18 15:43:04'),
-(3, 'Complete', '1', '', '', '2023-06-18 15:43:17', '2023-06-18 15:43:17'),
-(4, 'Quota Full', '1', '', '', '2023-06-18 15:43:27', '2023-06-18 15:43:27');
+INSERT INTO `db_project_status` (`id`, `title`, `color`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Running', 'success', '1', '', '', '2023-06-18 15:42:52', '2023-07-16 06:08:05'),
+(2, 'Testing', '', '1', '', '', '2023-06-18 15:43:04', '2023-07-16 06:12:00'),
+(3, 'Complete', '', '1', '', '', '2023-06-18 15:43:17', '2023-06-18 15:43:17'),
+(4, 'Quota Full', '', '1', '', '', '2023-06-18 15:43:27', '2023-06-18 15:43:27'),
+(5, 'Hold', 'warning', '1', '', '', '2023-07-16 06:06:51', '2023-07-16 06:08:09'),
+(6, 'Closed', 'danger', '1', '', '', '2023-07-16 06:06:51', '2023-07-16 06:08:12');
 
 -- --------------------------------------------------------
 
@@ -290,9 +293,7 @@ CREATE TABLE `db_project_vendor` (
 --
 
 INSERT INTO `db_project_vendor` (`id`, `project_id`, `vendor`, `vendor_contact`, `cpc_cpi`, `req_complete`, `complete_link`, `terminate_link`, `quota_full_link`, `status`, `note`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 4, '10', '10', '10', 21, 'asdf', 'asdf', 'asdf', 'test', 'afsd', '', '', '2023-07-02 10:59:03', '2023-07-02 10:59:03'),
-(2, 4, '10', '10', '25', 21, 'asdf', 'fasdf', 'fasd', 'test', 'asd', '', '', '2023-07-02 11:39:33', '2023-07-02 11:39:33'),
-(3, 4, '10', '10', '25', 21, 'asdf', 'fasdf', 'fasd', '1', 'asd', '', '', '2023-07-02 11:55:06', '2023-07-02 11:55:06');
+(1, 4, '10', '10', '10', 21, 'asdf', 'asdf', 'asdf', 'test', 'afsd', '', '', '2023-07-02 10:59:03', '2023-07-02 10:59:03');
 
 -- --------------------------------------------------------
 
@@ -303,14 +304,19 @@ INSERT INTO `db_project_vendor` (`id`, `project_id`, `vendor`, `vendor_contact`,
 CREATE TABLE `db_response` (
   `id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
-  `project_code` varchar(100) NOT NULL,
   `ip_address` varchar(100) NOT NULL,
-  `vendor_id` varchar(100) NOT NULL,
   `panlist_id` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `db_response`
+--
+
+INSERT INTO `db_response` (`id`, `project_id`, `ip_address`, `panlist_id`, `status`, `created_at`, `updated_at`) VALUES
+(4, 4, '::1', '10', 'Redirected', '2023-07-16 07:39:27', '2023-07-16 07:46:10');
 
 -- --------------------------------------------------------
 
@@ -405,7 +411,8 @@ ALTER TABLE `db_country`
 -- Indexes for table `db_login`
 --
 ALTER TABLE `db_login`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `db_logs`
@@ -481,7 +488,7 @@ ALTER TABLE `db_company_type`
 -- AUTO_INCREMENT for table `db_contact`
 --
 ALTER TABLE `db_contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `db_contact_group`
@@ -499,7 +506,7 @@ ALTER TABLE `db_country`
 -- AUTO_INCREMENT for table `db_login`
 --
 ALTER TABLE `db_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `db_logs`
@@ -511,7 +518,7 @@ ALTER TABLE `db_logs`
 -- AUTO_INCREMENT for table `db_project`
 --
 ALTER TABLE `db_project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `db_project_keys`
@@ -523,19 +530,19 @@ ALTER TABLE `db_project_keys`
 -- AUTO_INCREMENT for table `db_project_status`
 --
 ALTER TABLE `db_project_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `db_project_vendor`
 --
 ALTER TABLE `db_project_vendor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `db_response`
 --
 ALTER TABLE `db_response`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `db_settings`
