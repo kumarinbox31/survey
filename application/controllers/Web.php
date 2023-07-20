@@ -8,26 +8,37 @@ class Web extends My_Controller{
     function capture() {
         if($get = $_GET){
             extract($get);
-            
+
             // url validation
             if(!isset($pid) || !isset($gid)){
                 echo 'Invalid url.';
                 return false;
             }
-            $project = $this->project->get(['id'=>$gid]);
-            $vendor = $this->contact->get(['id'=>$pid]);
+
+            // getting project vendor details 
+            $get = $this->ProjectVendor->get(['id'=>$gid]);
+            if(!$get->num_rows()){
+                echo 'Invalid gid.';
+                return false;
+            }
+            $row = $get->row();
+            $project_id = $row->project_id;
+            
+            
+            $project = $this->project->get(['id'=>$project_id]);
+            // $vendor = $this->contact->get(['id'=>$pid]);
             if(!$project->num_rows()){
                 echo  'Invalid Survey Id';
                 return false;
             }
-            if(!$vendor->num_rows()){
-                echo 'Invalid Vendor Id';
-                return false;
-            }
+            // if(!$vendor->num_rows()){
+            //     echo 'Invalid Vendor Id';
+            //     return false;
+            // }
 
             // IP Address Validation
             $ip = $_SERVER['REMOTE_ADDR'];
-            $res = $this->response->get(['project_id'=>$gid,'ip_address'=>$ip]);
+            $res = $this->response->get(['project_vendor_id'=>$gid,'ip_address'=>$ip,'panlist_id'=>$pid]);
             if($res->num_rows()){
                 echo 'Already available ip address';
                 return false;
@@ -38,7 +49,7 @@ class Web extends My_Controller{
             switch($project->project_status_id){
                 case 1:
                     // running
-                    $this->response->add(['project_id'=>$gid,'ip_address'=>$ip,'panlist_id'=>$pid,'status'=>'Redirected']);
+                    $this->response->add(['project_vendor_id'=>$gid,'ip_address'=>$ip,'panlist_id'=>$pid,'status'=>'Redirected']);
                     $link = $project->survey_link;
                     $link = str_replace("{{RESP_ID}}",$gid,$link);
                     header("Location: $link");

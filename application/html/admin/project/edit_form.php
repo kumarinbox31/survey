@@ -218,8 +218,8 @@ if (isset($row) && $row->num_rows()) {
                 foreach ($get->result() as $row) {
                     $projectVendorEdit = base_url('back/vendor/' . $id . '/edit_vendor/' . $row->id);
                     $vendor = $this->contact->get(['id' => $row->vendor])->row();
-                    $link = base_url('capture.php?gid=').$id.'&pid='.$row->vendor;
-                    $redirects = $this->response->get(['project_id'=>$id,'panlist_id'=>$row->vendor])->num_rows();
+                    $link = base_url('capture.php?gid=').$row->id.'&pid={{PANALIST_ID}}';
+                    $redirects = $this->response->get(['project_vendor_id'=>$row->id,'status'=>'Redirected'])->num_rows();
 
                     echo "<tr>
                                 <td class='text-center'>
