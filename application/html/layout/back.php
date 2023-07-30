@@ -40,6 +40,9 @@
 
 
   <style>
+    .jconfirm-box{
+      color:black;
+    }
     .btn-sm {
       padding: 0.2rem !important;
       border-radius: 5px;
@@ -118,6 +121,10 @@
       margin-left: 1rem;
     }
   </style>
+   <!-- jquery confirm -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+ <!-- jquery confirm end  -->
+
 </head>
 
 <body>
@@ -480,6 +487,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
   <!-- datatable js -->
   <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script> 
+  
   <script>
 
     $(document).ready(function () {
@@ -513,6 +522,7 @@
     <?php  } ?>
   </script>
   <!-- datatable js ends -->
-</body>
+
+ </body>
 
 </html>

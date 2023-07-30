@@ -228,7 +228,7 @@ if (isset($row) && $row->num_rows()) {
                                 <td>$row->id</td>
                                 <td>$vendor->display_name</td>
                                 <td>
-                                    <a >Redirects : $redirects/0</a><br>
+                                    <a onclick='showStatus($row->id,".'"Redirected"'.")'>Redirects : $redirects/0</a><br>
                                     <a >Completed : </a><br>
                                     <a >Disqualified : </a><br>
                                     <a >QF : </a><br>
@@ -246,3 +246,33 @@ if (isset($row) && $row->num_rows()) {
 
     </div>
 </div>
+
+<script>
+    $AJAX_DATA =0;
+    function showStatus(id,type){
+        $AJAX_DATA = $.confirm({
+            icon: 'mdi mdi-format-list-bulleted-type',
+            title: 'Scan Next QR',
+            type: 'blue',
+            typeAnimated: true,
+            draggable: true,
+            animation: 'rotateYR',
+            columnClass: 'col-md-12 col-sm-12 col-xs-12',
+            dragWindowBorder: false,
+            content: function () {
+                var self = this;
+                return $.ajax({
+                    url: '<?php echo base_url('back/ajax');?>',
+                    dataType: 'json',
+                    type: 'post',
+                    data:{type:"get_response",id:id,rType:type},
+                    success:function(res)
+                    {
+                        self.setContent(res.content);
+                        self.setTitle(res.title);
+                    }
+                });
+            }
+        });
+    }
+</script>

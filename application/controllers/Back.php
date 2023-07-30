@@ -277,6 +277,10 @@ class Back extends MY_Controller
     {
         if ($post = $this->input->post()) {
             switch ($post['type']) {
+                case 'get_response':
+                    $res['content'] = 'hi';
+                    $res['title'] = 'Vendor: 194-Internal Company';
+                break;
                 case 'deleteRow':
                     $this->db->where('id', $post['id'])->delete($post['table']);
                     $res['msg'] = 'Delete Successfully.';
