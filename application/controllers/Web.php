@@ -38,7 +38,7 @@ class Web extends My_Controller{
 
             // IP Address Validation
             $ip = $_SERVER['REMOTE_ADDR'];
-            $res = $this->response->get(['project_vendor_id'=>$gid,'ip_address'=>$ip,'panlist_id'=>$pid]);
+            $res = $this->response->get(['project_vendor_id'=>$gid,'ip_address'=>$ip]);
             if($res->num_rows()){
                 echo 'Already available ip address';
                 return false;
@@ -51,7 +51,7 @@ class Web extends My_Controller{
                     // running
                     $this->response->add(['project_vendor_id'=>$gid,'ip_address'=>$ip,'panlist_id'=>$pid,'status'=>'Redirected']);
                     $link = $project->survey_link;
-                    $link = str_replace("{{RESP_ID}}",$gid,$link);
+                    $link = str_replace("{{RESP_ID}}",$pid,$link);
                     header("Location: $link");
                 break;
                 case 2:

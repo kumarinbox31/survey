@@ -159,7 +159,7 @@ class Back extends MY_Controller
                             }
                         }
                         $this->session->set_flashdata('success_msg', 'Project (' . $post['project_name'] . ') Added Successfully.');
-                        redirect(current_url());
+                        redirect(base_url('back/project'));
                     }
                     break;
                 case 'update':
