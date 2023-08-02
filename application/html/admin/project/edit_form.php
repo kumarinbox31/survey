@@ -220,7 +220,10 @@ if (isset($row) && $row->num_rows()) {
                     $vendor = $this->contact->get(['id' => $row->vendor])->row();
                     $link = base_url('capture.php?gid=').$row->id.'&pid={{PANALIST_ID}}';
                     $redirects = $this->response->get(['project_vendor_id'=>$row->id,'status'=>'Redirected'])->num_rows();
-
+                    $completes = $this->response->get(['project_vendor_id'=>$row->id,'status'=>'Completed'])->num_rows();
+                    $disqualifieds = $this->response->get(['project_vendor_id'=>$row->id,'status'=>'Disqualified'])->num_rows();
+                    $qualifieds = $this->response->get(['project_vendor_id'=>$row->id,'status'=>'QF'])->num_rows();
+                    
                     echo "<tr>
                                 <td class='text-center'>
                                     <a href='$projectVendorEdit' class='btn btn-sm btn-info' ><i class='mdi mdi-table-edit'></i></a>
@@ -229,9 +232,9 @@ if (isset($row) && $row->num_rows()) {
                                 <td>$vendor->display_name</td>
                                 <td>
                                     <a onclick='showStatus($row->id,".'"Redirected"'.")'>Redirects : $redirects/0</a><br>
-                                    <a >Completed : </a><br>
-                                    <a >Disqualified : </a><br>
-                                    <a >QF : </a><br>
+                                    <a >Completed : $completes/0</a><br>
+                                    <a >Disqualified : $disqualifieds/0</a><br>
+                                    <a >QF : $qualifieds/0</a><br>
                                 </td>
                                 <td></td>
                                 <td>
