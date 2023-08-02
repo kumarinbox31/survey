@@ -37,8 +37,8 @@ class Web extends My_Controller{
             // }
 
             // IP Address Validation
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $res = $this->response->get(['project_vendor_id'=>$gid,'ip_address'=>$ip]);
+            $ip = get_client_ip();
+            $res = $this->response->get(['project_vendor_id'=>$gid,'ip_address'=>$ip,'status'=>'Redirected']);
             if($res->num_rows()){
                 echo 'Already available ip address';
                 return false;
@@ -46,48 +46,62 @@ class Web extends My_Controller{
             // project details
             $project = $project->row();
 
-            switch($project->project_status_id){
-                case 1:
+            // switch($project->project_status_id){
+            //     case 1:
                     // running
                     $this->response->add(['project_vendor_id'=>$gid,'ip_address'=>$ip,'panlist_id'=>$pid,'status'=>'Redirected']);
                     $link = $project->survey_link;
                     $link = str_replace("{{RESP_ID}}",$pid,$link);
                     header("Location: $link");
-                break;
-                case 2:
-                    // Testing
+            //     break;
+            //     case 2:
+            //         // Testing
                     
-                break;
-                case 3:
-                    echo 'Complete';return false;
-                break;
-                case 4:
-                    echo 'Quota Full.';return false;
-                break;
-                case 5:
-                    echo 'Hold';return false;
-                break;
-                case 6:
-                    echo 'Closed';return false;
-                break;
+            //     break;
+            //     case 3:
+            //         echo 'Complete';return false;
+            //     break;
+            //     case 4:
+            //         echo 'Quota Full.';return false;
+            //     break;
+            //     case 5:
+            //         echo 'Hold';return false;
+            //     break;
+            //     case 6:
+            //         echo 'Closed';return false;
+            //     break;
                 
-            }
+            // }
            
         }
     }
     function endcapture(){
         if($get = $_GET){
             $a = $get['a'];
+            $sid = $get['sid'];
+            $uid = $get['uid'];
+
             if ($a == 1) {
+                $type = 'Completed';
                 $msg = "Thank You For Completing This Survey.";
                 $color = 'green';
             } elseif ($a == 2) {
+                $type = 'Disqualified';
                 $msg = "Thank you for your participations, but unfortunately you did not qualify for this survey.";
                 $color = 'red';
             } elseif ($a == 3) {
+                $type = 'QF';
                 $msg = "Thank you for your participations, but we have met the required audience.";
                 $color = 'orange';
             }  
+            
+            $ip = get_client_ip();
+            $res = $this->response->get(['project_vendor_id'=>$sid,'ip_address'=>$ip,'status'=>$type]);
+            if($res->num_rows()){
+                echo 'Already available ip address';
+                return false;
+            }
+            $this->response->add(['project_vendor_id'=>$sid,'ip_address'=>$ip,'panlist_id'=>$uid,'status'=> $type]);
             
             echo "<h1 style='text-align:center;color:$color;'>$msg</h1>";
 
