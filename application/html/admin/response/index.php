@@ -4,7 +4,7 @@ $html  = 'Record not found.';
 $get = $this->response->get(['project_vendor_id'=>$project_vendor_id,'status'=>$status]);
     $result = $get->result();
     $html = "
-            <table  class='table table-bordered'>
+            <table  class='table table-bordered datatable'>
             <thead>
                 <tr>
                     <th>#</th>
