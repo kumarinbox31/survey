@@ -179,9 +179,9 @@ if (isset($row) && $row->num_rows()) {
         </div>
     </div>
     <?php
-    $complete_url = base_url("endcapture.php?a=1&sid=$id&uid=111");
-    $terminate_url = base_url("endcapture.php?a=2&sid=$id&uid=222");
-    $over_quota_url = base_url("endcapture.php?a=3&sid=$id&uid=333");
+    $complete_url = base_url("endcapture.php?a=1&sid=0&uid=111");
+    $terminate_url = base_url("endcapture.php?a=2&sid=0&uid=222");
+    $over_quota_url = base_url("endcapture.php?a=3&sid=0&uid=333");
     ?>
     <div class="col-md-5">
         <div class="card">

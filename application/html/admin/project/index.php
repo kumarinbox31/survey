@@ -40,7 +40,6 @@
                                         $contact = $contact->row();
                                         $contact_name = $contact->display_name != '' ? $contact->display_name : $contact->company_name;
                                     }
-
                                     $sales = $this->contact->get(['id'=>$row->sales]);
                                     $sales_name = '';
                                     if($sales->num_rows()){
