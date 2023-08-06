@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2023 at 09:59 AM
+-- Generation Time: Aug 06, 2023 at 04:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -217,7 +217,8 @@ CREATE TABLE `db_project` (
 --
 
 INSERT INTO `db_project` (`id`, `project_name`, `project_status_id`, `client`, `contact`, `sales`, `manager_name`, `no_of_complete`, `ir`, `loi`, `country`, `cpi_cpc`, `project_type`, `survey_link`, `code`, `quoates`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(4, 'Project Test', 1, 8, 8, 2, '3', 10, '10', '25', 1, 'test', 'test', 'http://braininfotech.com/test-survey?id={{RESP_ID}}', '', 'sadfasdf123', '', '', '2023-07-02 07:15:29', '2023-07-02 07:15:29');
+(4, 'Project Test', 1, 8, 8, 2, '3', 10, '10', '25', 1, 'test', 'test', 'http://braininfotech.com/test-survey?id={{RESP_ID}}', '', 'sadfasdf123', '', '', '2023-07-02 07:15:29', '2023-07-02 07:15:29'),
+(13, 'Test abc', 1, 8, 8, 2, '3', 1, '1', '1', 1, '1', 'sad', 'http://braininfotech.com/test-survey?id={{RESP_ID}}', '', 'sadfasdf', '', '', '2023-08-06 07:27:53', '2023-08-06 07:27:53');
 
 -- --------------------------------------------------------
 
@@ -293,7 +294,10 @@ CREATE TABLE `db_project_vendor` (
 --
 
 INSERT INTO `db_project_vendor` (`id`, `project_id`, `vendor`, `vendor_contact`, `cpc_cpi`, `req_complete`, `complete_link`, `terminate_link`, `quota_full_link`, `status`, `note`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 4, '10', '10', '10', 21, 'asdf', 'asdf', 'asdf', 'test', 'afsd', '', '', '2023-07-02 10:59:03', '2023-07-02 10:59:03');
+(1, 4, '10', '10', '10', 21, 'asdf', 'asdf', 'asdf', 'test', 'afsd', '', '', '2023-07-02 10:59:03', '2023-07-02 10:59:03'),
+(6, 4, '10', '10', '1', 1, NULL, NULL, NULL, 'test', 'jakls', '', '', '2023-07-31 15:22:51', '2023-08-06 06:50:07'),
+(7, 12, '10', '', '121', 234, NULL, NULL, NULL, '', NULL, '', '', '2023-08-02 08:37:25', '2023-08-02 08:37:25'),
+(9, 13, '10', '', '1', 1, 'http://localhost/survay/endcapture.php?a=1&sid=9&uid={{RESP_ID}}', 'http://localhost/survay/endcapture.php?a=2&sid=9&uid={{RESP_ID}}', 'http://localhost/survay/endcapture.php?a=3&sid=9&uid={{RESP_ID}}', '', NULL, '', '', '2023-08-06 07:27:53', '2023-08-06 07:27:53');
 
 -- --------------------------------------------------------
 
@@ -303,7 +307,7 @@ INSERT INTO `db_project_vendor` (`id`, `project_id`, `vendor`, `vendor_contact`,
 
 CREATE TABLE `db_response` (
   `id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
+  `project_vendor_id` int(11) NOT NULL,
   `ip_address` varchar(100) NOT NULL,
   `panlist_id` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL,
@@ -315,8 +319,10 @@ CREATE TABLE `db_response` (
 -- Dumping data for table `db_response`
 --
 
-INSERT INTO `db_response` (`id`, `project_id`, `ip_address`, `panlist_id`, `status`, `created_at`, `updated_at`) VALUES
-(4, 4, '::1', '10', 'Redirected', '2023-07-16 07:39:27', '2023-07-16 07:46:10');
+INSERT INTO `db_response` (`id`, `project_vendor_id`, `ip_address`, `panlist_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 0, '::1', '333', 'QF', '2023-08-06 08:10:54', '2023-08-06 08:10:54'),
+(2, 9, '::1', '1221', 'Redirected', '2023-08-06 14:12:30', '2023-08-06 14:12:30'),
+(3, 9, '::1', '1221', 'Completed', '2023-08-06 14:12:55', '2023-08-06 14:12:55');
 
 -- --------------------------------------------------------
 
@@ -518,7 +524,7 @@ ALTER TABLE `db_logs`
 -- AUTO_INCREMENT for table `db_project`
 --
 ALTER TABLE `db_project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `db_project_keys`
@@ -536,13 +542,13 @@ ALTER TABLE `db_project_status`
 -- AUTO_INCREMENT for table `db_project_vendor`
 --
 ALTER TABLE `db_project_vendor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `db_response`
 --
 ALTER TABLE `db_response`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `db_settings`
