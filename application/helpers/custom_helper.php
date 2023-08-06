@@ -31,3 +31,13 @@ function get_client_ip() {
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
+
+function getLastInsertId($table) {
+    $ci = &get_instance();
+    $db_name = 'survey';
+    // Get the current value of the auto-incremented column before inserting
+    $query = $ci->db->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$db_name' AND TABLE_NAME = '$table'");
+    $result = $query->row();
+    $lastInsertId = $result->AUTO_INCREMENT;
+    return $lastInsertId;
+}

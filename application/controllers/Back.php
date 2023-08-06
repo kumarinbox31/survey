@@ -13,6 +13,7 @@ class Back extends MY_Controller
     /**
      * Summary of __construct
      */
+
     function __construct()
     {
         parent::__construct();
@@ -25,6 +26,11 @@ class Back extends MY_Controller
      * Summary of index
      * @return void
      */
+
+    function test() {
+       echo getLastInsertId('db_project_vendor');
+
+    } 
     function index()
     {
         redirect(base_url('back/dashboard'));
@@ -144,13 +150,17 @@ class Back extends MY_Controller
                         }
                         // add internal companies as vendor
                         $get = $this->contact->get(['contact_group_id'=>2]);
+                        $id = getLastInsertId('db_project_vendor');
                         if($get->num_rows()){
                             foreach($get->result() as $row){
                                 $data = [
-                                    'project_id' => $pid,
-                                    'vendor' => $row->id,
-                                    'cpc_cpi' => $post['cpi_cpc'],
-                                    'req_complete' => $post['no_of_complete']
+                                    'project_id'    =>  $pid,
+                                    'vendor'        =>  $row->id,
+                                    'cpc_cpi'       =>  $post['cpi_cpc'],
+                                    'req_complete'  =>  $post['no_of_complete'],
+                                    'complete_link' =>  base_url("endcapture.php?a=1&sid=$id&uid={{RESP_ID}}"),
+                                    'terminate_link'    =>  base_url("endcapture.php?a=2&sid=$id&uid={{RESP_ID}}"),
+                                    'quota_full_link'   =>  base_url("endcapture.php?a=3&sid=$id&uid={{RESP_ID}}"),
                                 ];
                                 $ins = $this->ProjectVendor->add($data);
                                 if(!$ins){
