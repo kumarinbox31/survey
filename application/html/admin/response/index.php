@@ -2,7 +2,6 @@
 
 $html  = 'Record not found.';
 $get = $this->response->get(['project_vendor_id'=>$project_vendor_id,'status'=>$status]);
-if($get->num_rows()){
     $result = $get->result();
     $html = "
             <table  class='table table-bordered'>
@@ -30,5 +29,4 @@ if($get->num_rows()){
         $html .=   "</tbody>
             </table>
         ";
-}
 echo $html;

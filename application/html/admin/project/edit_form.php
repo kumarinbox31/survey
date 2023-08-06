@@ -232,9 +232,9 @@ if (isset($row) && $row->num_rows()) {
                                 <td>$vendor->display_name</td>
                                 <td>
                                     <a onclick='showStatus($row->id,".'"Redirected"'.")'>Redirects : $redirects/0</a><br>
-                                    <a >Completed : $completes/0</a><br>
-                                    <a >Disqualified : $disqualifieds/0</a><br>
-                                    <a >QF : $qualifieds/0</a><br>
+                                    <a onclick='showStatus($row->id,".'"Completed"'.")'>Completed : $completes/0</a><br>
+                                    <a onclick='showStatus($row->id,".'"Disqualified"'.")'>Disqualified : $disqualifieds/0</a><br>
+                                    <a onclick='showStatus($row->id,".'"QF"'.")'>QF : $qualifieds/0</a><br>
                                 </td>
                                 <td></td>
                                 <td>
